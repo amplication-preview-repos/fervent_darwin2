@@ -6,3 +6,47 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Categoria {
+  createdAt DateTime  @default(now())
+  descricao String?
+  id        String    @id @default(cuid())
+  nome      String?
+  produtos  Produto[]
+  updatedAt DateTime  @updatedAt
+}
+
+model Catalogo {
+  createdAt DateTime  @default(now())
+  descricao String?
+  id        String    @id @default(cuid())
+  nome      String?
+  produtos  Produto[]
+  updatedAt DateTime  @updatedAt
+}
+
+model Produto {
+  ativo             Boolean?
+  catalogo          Catalogo?  @relation(fields: [catalogoId], references: [id])
+  catalogoId        String?
+  categoria         Categoria? @relation(fields: [categoriaId], references: [id])
+  categoriaId       String?
+  createdAt         DateTime   @default(now())
+  descricao         String?
+  id                String     @id @default(cuid())
+  marca             Marca?     @relation(fields: [marcaId], references: [id])
+  marcaId           String?
+  nome              String?
+  preco             Float?
+  quantidadeEstoque Int?
+  updatedAt         DateTime   @updatedAt
+}
+
+model Marca {
+  createdAt DateTime  @default(now())
+  descricao String?
+  id        String    @id @default(cuid())
+  nome      String?
+  produtos  Produto[]
+  updatedAt DateTime  @updatedAt
+}
